@@ -1,5 +1,6 @@
 ﻿using BlazorTMDB.Server.Controllers;
-using BlazorTMDB.Shared;
+using BlazorTMDB.Server.Data;
+using BlazorTMDB.Shared.Models;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,16 @@ namespace BlazorTMDB.Server.Hubs
 {
     public class ChatHub : Hub
     {
-        //public TMDBController _TMDBController { get; set; }
+        public IService _Service { get; set; }
 
-        //public ChatHub(TMDBController tMDBController)
-        //{
-        //    _TMDBController = tMDBController;
-        //}
-
-        //public async Task GetData()
-        //{
-        //    IEnumerable<WeatherForecast> weatherForecasts = _TMDBController.Get();
-        //    await Clients.All.SendAsync("ReceiveData", weatherForecasts);
-        //}
-
-        public async Task SendMessage(string user, string message)
+        public ChatHub(IService service)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            _Service = service;
+        }
+
+        public async Task SendMessage()
+        {
+            await Clients.All.SendAsync("ReceiveMessage", _Service.Test());
         }
     }
 }

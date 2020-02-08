@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using BlazorTMDB.Server.Hubs;
+using BlazorTMDB.Server.Controllers;
+using BlazorTMDB.Server.Data;
 
 namespace BlazorTMDB.Server
 {
@@ -21,6 +23,7 @@ namespace BlazorTMDB.Server
                     new[] { "application/octet-stream" });
             });
             services.AddSignalR();
+            services.AddScoped<IService, Service>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +45,7 @@ namespace BlazorTMDB.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-                endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapFallbackToClientSideBlazor<Client.Program>("index.html");
             });
         }
