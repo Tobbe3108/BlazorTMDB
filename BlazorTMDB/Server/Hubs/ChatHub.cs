@@ -12,16 +12,16 @@ namespace BlazorTMDB.Server.Hubs
 {
     public class ChatHub : Hub
     {
-        public IService _Service { get; set; }
+        public ITMDBService _TMDBService { get; set; }
 
-        public ChatHub(IService service)
+        public ChatHub(ITMDBService service)
         {
-            _Service = service;
+            _TMDBService = service;
         }
 
         public async Task SendMessage()
         {
-            await Clients.All.SendAsync("ReceiveMessage", _Service.Test());
+            await Clients.All.SendAsync("ReceiveMessage", _TMDBService.Test());
         }
     }
 }

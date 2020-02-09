@@ -3,16 +3,14 @@
 @inject NavigationManager NavigationManager
 
 <div id="searchContainer">
-    <p>@_message</p>
+    <p>@_response</p>
     <button @onclick="Send">Search</button>
 </div>
 <hr />
 
 @code {
     private HubConnection _hubConnection;
-    private string _message = "";
-    private string _userInput;
-    private string _messageInput;
+    private string _response = "Nothing";
 
     protected override async Task OnInitializedAsync()
     {
@@ -21,10 +19,9 @@
             .Build();
 
         _hubConnection.On<string>
-    ("ReceiveMessage", message =>
+    ("ReceiveMessage", response =>
     {
-        _message = message;
-
+        _response = response;
         StateHasChanged();
     });
 

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore;
+﻿using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace BlazorTMDB.Server
 {
@@ -8,15 +11,22 @@ namespace BlazorTMDB.Server
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration(new ConfigurationBuilder()
-                    .AddCommandLine(args)
-                    .Build())
-                .UseStartup<Startup>()
-                .Build();
+        // ASP.NET Core 3.0+:
+        // The UseServiceProviderFactory call attaches the
+        // Autofac provider to the generic hosting mechanism.
+        public static IHost BuildHost(string[] args) => Host.CreateDefaultBuilder(args)
+        .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+        .ConfigureWebHostDefaults(webHostBuilder =>
+        {
+            webHostBuilder
+              .UseContentRoot(Directory.GetCurrentDirectory())
+              .UseIISIntegration()
+              .UseStartup<Startup>();
+        })
+        .Build();
+
     }
 }
