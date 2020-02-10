@@ -15,5 +15,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Shared\BlazorTMDB.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Components\" />
+  </ItemGroup>
 
 </Project>

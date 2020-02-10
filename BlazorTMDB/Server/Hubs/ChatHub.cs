@@ -1,6 +1,4 @@
-﻿using BlazorTMDB.Server.Controllers;
-using BlazorTMDB.Server.Data;
-using BlazorTMDB.Shared.Models;
+﻿using BlazorTMDB.Shared.Models;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -12,16 +10,9 @@ namespace BlazorTMDB.Server.Hubs
 {
     public class ChatHub : Hub
     {
-        public ITMDBService _TMDBService { get; set; }
-
-        public ChatHub(ITMDBService service)
+        public async Task SendMessage(string user, string message)
         {
-            _TMDBService = service;
-        }
-
-        public async Task SendMessage()
-        {
-            await Clients.All.SendAsync("ReceiveMessage", _TMDBService.Test());
+            await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
     }
 }

@@ -5,13 +5,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using BlazorTMDB.Server.Hubs;
-using BlazorTMDB.Server.Controllers;
-using BlazorTMDB.Server.Data;
+using Microsoft.Extensions.Configuration;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using System.Reflection;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Threading.Tasks;
 
 namespace BlazorTMDB.Server
 {
     public class Startup
     {
+        public const string CookieAuthScheme = "CookieAuthScheme";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -23,7 +29,6 @@ namespace BlazorTMDB.Server
                     new[] { "application/octet-stream" });
             });
             services.AddSignalR();
-            services.AddTransient<ITMDBService, TMDBService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

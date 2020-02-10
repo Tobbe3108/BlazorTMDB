@@ -59,15 +59,5 @@ namespace BlazorTMDB.Server.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] placeholder_images_image_large {
-            get {
-                object obj = ResourceManager.GetObject("placeholder_images_image_large", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
